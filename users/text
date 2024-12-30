@@ -1,0 +1,38 @@
+<!-- 
+mengunakan form data saat melakukan input 
+
+// Menghubungkan ke file connection.php
+include_once("../connection.php");
+
+// Validasi keberadaan data POST
+if (isset($_POST['user_name']) && isset($_POST['user_email']) && isset($_POST['user_password'])) {
+    // Mendapatkan data dari request POST
+    $username = $_POST['user_name'];
+    $email = $_POST['user_email'];
+    $password = $_POST['user_password'];
+
+    // Mengamankan password menggunakan MD5
+    $secure_password = md5($password);
+
+    // Menyiapkan query SQL
+    $sql_query = "INSERT INTO users (user_name, user_email, user_password) VALUES ('$username', '$email', '$secure_password')";
+
+    // Menjalankan query dan memeriksa hasilnya
+    if ($connectNow->query($sql_query) === TRUE) {
+        echo json_encode(["success" => true]);
+    } else {
+        echo json_encode([
+            "success" => false,
+            "message" => "Error: " . $sql_query . "<br>" . $connectNow->error
+        ]);
+    }
+} else {
+    // Jika data POST tidak lengkap
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid input. Please provide user_name, user_email, and user_password."
+    ]);
+}
+
+// Menutup koneksi
+$connectNow->close(); -->
